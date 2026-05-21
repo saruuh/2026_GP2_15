@@ -1,43 +1,77 @@
-Labbaik — لبّيك
-Graduation Project — iOS Simulator Build
+# Labbaik — لبّيك
+
+Graduation Project — iOS Simulator Build  
 King Saud University, College of Computer and Information Sciences
 
-HOW TO RUN
+---
 
-This is an iOS Simulator build of the Labbaik app. It runs on the
-iOS Simulator on a Mac (Xcode required). No physical iPhone needed.
+## Introduction
 
-Steps:
+Labbaik is a Flutter-based mobile application designed to assist pilgrims during Hajj and Umrah through an interactive and user-friendly experience.
 
-1.⁠ ⁠On a Mac with Xcode installed, open the Simulator:
-   - Open Xcode, then go to: Xcode > Open Developer Tool > Simulator
-   - OR open Terminal and run:  open -a Simulator
+### Features
 
-2.⁠ ⁠Unzip "Labbaik-simulator.zip" if it is still zipped.
-   This gives you "Runner.app".
+- Step-by-step Hajj & Umrah ritual guidance
+- Tawaf & Sa'ee tracking
+- AI Fatwa chatbot
+- Offline Duaa & Thikr library
+- Prayer times with Athan notifications
+- Emergency contacts
 
-3.⁠ ⁠Drag "Runner.app" onto the open Simulator window.
-   The app installs and launches automatically.
+---
 
+## Technology
 
-NOTES
+- Flutter
+- Dart
+- Xcode Simulator
 
+---
 
-•⁠  ⁠This build is for the iOS Simulator only (not a physical device).
-•⁠  ⁠Built with Flutter. Features include step-by-step Hajj/Umrah ritual
-  guidance, Tawaf/Sa'ee tracking, an AI Fatwa chatbot, an offline
-  Duaa & Thikr library, prayer times with Athan notifications, and
-  emergency contacts.
-•⁠  ⁠Some features that rely on live device sensors or network services
-  may behave differently in the Simulator than on a physical phone.
+## How to Run
 
+This build runs on the iOS Simulator on macOS using Xcode.
 
-TEAM
+### Requirements
 
+- Mac computer
+- Xcode installed
 
-Shahad AlMutairi    444200935
-Nouf AlMansour      444200525
-Aroub AlSalihi      444200560
-Sara AlOqiel        444203016
+### Steps
 
-Supervised by: Dr. Lama AlSudias
+1. Open the iOS Simulator
+
+   Xcode → Open Developer Tool → Simulator
+
+   Or run:
+
+   `open -a Simulator`
+
+2. Unzip `Labbaik-simulator.zip`
+
+3. Drag `Runner.app` into the open Simulator window
+
+The app will install and launch automatically.
+
+---
+
+## Notes
+
+- This build is for the iOS Simulator only
+- No physical iPhone is required
+- Some device-specific features may behave differently in the Simulator
+
+---
+
+## Team
+
+- Shahad AlMutairi — 444200935
+- Nouf AlMansour — 444200525
+- Aroub AlSalihi — 444200560
+- Sara AlOqiel — 444203016
+
+---
+
+## Supervisor
+
+Dr. Lama AlSudias
