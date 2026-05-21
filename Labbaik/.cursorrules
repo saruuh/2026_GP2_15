@@ -1,0 +1,320 @@
+# Commit Message Guidelines
+
+## Commit Message Format
+- Keep commit messages SHORT and concise
+- Follow Conventional Commits format: `<type>[optional scope]: <description>`
+- Maximum length: ~50-60 characters for the subject line
+- Do NOT include detailed bullet points or long descriptions in commit messages
+
+## Changelog Documentation
+- All detailed information about changes should be added to `CHANGELOG.md` as bullet points
+- When committing, add detailed change information to CHANGELOG.md under the appropriate section
+- Use bullet points format in CHANGELOG.md for clarity
+- Keep CHANGELOG.md entries organized by type (Added, Changed, Fixed, Removed, etc.)
+
+## Example
+**Commit message (short):**
+```
+chore: update dependencies and increment versions in pubspec.yaml
+```
+
+**CHANGELOG.md entry (detailed):**
+```markdown
+### Changed
+- Updated dependencies and incremented versions in pubspec.yaml
+  - Updated flutter_svg to latest version
+  - Updated image_picker to latest version
+  - Updated firebase_messaging to latest version
+  - ... (more details)
+```
+
+## Rule Summary
+- ✅ Short commit messages (50-60 chars max)
+- ✅ Detailed information goes to CHANGELOG.md
+- ✅ Use bullet points in CHANGELOG.md
+- ❌ No long descriptions in commit messages
+- ❌ No bullet points in commit messages
+
+---
+
+# Flutter UI Development Guidelines
+
+## ScreenUtil Extension Usage
+
+### Width and Height
+- **ALWAYS use `.spMin` for width and height values**
+- ❌ **WRONG**: `width: 48.h` or `height: 48.h`
+- ✅ **CORRECT**: `width: 48.spMin` or `height: 48.spMin`
+
+**Example:**
+```dart
+// ❌ WRONG
+Container(
+  width: 48.h,
+  height: 48.h,
+)
+
+// ✅ CORRECT
+Container(
+  width: 48.spMin,
+  height: 48.spMin,
+)
+```
+
+### EdgeInsets Padding/Margin
+- **ALWAYS use `.r` extension on the entire EdgeInsets**
+- ❌ **WRONG**: 
+  ```dart
+  padding: EdgeInsets.symmetric(
+    vertical: 20.h,
+    horizontal: 24.w,
+  )
+  ```
+- ✅ **CORRECT**: 
+  ```dart
+  padding: EdgeInsets.symmetric(
+    vertical: 20,
+    horizontal: 24,
+  ).r
+  ```
+
+**Example:**
+```dart
+// ❌ WRONG
+Padding(
+  padding: EdgeInsets.symmetric(
+    vertical: 20.h,
+    horizontal: 24.w,
+  ),
+)
+
+// ✅ CORRECT
+Padding(
+  padding: EdgeInsets.symmetric(
+    vertical: 20,
+    horizontal: 24,
+  ).r,
+)
+```
+
+### Font Size
+- **ALWAYS use `.spMin` for fontSize**
+- ❌ **WRONG**: `fontSize: 14.sp`
+- ✅ **CORRECT**: `fontSize: 14.spMin`
+
+**Example:**
+```dart
+// ❌ WRONG
+Text(
+  'Hello',
+  style: TextStyle(fontSize: 14.sp),
+)
+
+// ✅ CORRECT
+Text(
+  'Hello',
+  style: TextStyle(fontSize: 14.spMin),
+)
+```
+
+## Reusable Components Rule (CRITICAL)
+
+### ⚠️ MANDATORY: All UI Enhancements Must Be Reusable Components
+
+**This is a CRITICAL rule that MUST be followed for ALL UI edits and enhancements.**
+
+When making ANY UI enhancement or edit:
+1. **Extract the enhanced UI into a reusable widget/component**
+2. **Place it in the appropriate widgets directory** (`lib/core/widgets/` or feature-specific widgets folder)
+3. **Make it configurable with parameters** so it can be reused across different pages
+4. **Use the reusable component in the original location**
+
+### Why This Rule Exists
+- Prevents code duplication
+- Ensures consistent UI across the app
+- Makes maintenance easier
+- Allows reuse of well-designed components
+
+### Implementation Guidelines
+
+1. **Component Location:**
+   - General reusable components → `lib/core/widgets/`
+   - Feature-specific components → Feature's widget folder
+
+2. **Component Structure:**
+   ```dart
+   class ReusableComponentName extends StatelessWidget {
+     final Type param1;
+     final Type param2;
+     
+     const ReusableComponentName({
+       super.key,
+       required this.param1,
+       this.param2,
+     });
+     
+     @override
+     Widget build(BuildContext context) {
+       // Component implementation
+     }
+   }
+   ```
+
+3. **When to Extract:**
+   - ✅ Creating new UI elements
+   - ✅ Enhancing existing UI
+   - ✅ Adding animations or interactions
+   - ✅ Creating custom buttons, cards, or containers
+   - ✅ Any UI that might be used in multiple places
+
+4. **Example:**
+   ```dart
+   // ❌ WRONG - Inline UI enhancement
+   Container(
+     height: 48.spMin,
+     decoration: BoxDecoration(...),
+     child: ...
+   )
+   
+   // ✅ CORRECT - Reusable component
+   // In lib/core/widgets/enhanced_button.dart
+   class EnhancedButton extends StatelessWidget {
+     final String text;
+     final VoidCallback? onPressed;
+     
+     const EnhancedButton({
+       super.key,
+       required this.text,
+       this.onPressed,
+     });
+     
+     @override
+     Widget build(BuildContext context) {
+       return Container(
+         height: 48.spMin,
+         decoration: BoxDecoration(...),
+         child: ...
+       );
+     }
+   }
+   
+   // Then use it:
+   EnhancedButton(
+     text: 'Sign In',
+     onPressed: () {},
+   )
+   ```
+
+### Rule Summary
+- ✅ **ALWAYS** extract UI enhancements into reusable components
+- ✅ Use `.spMin` for width, height, and fontSize
+- ✅ Use `.r` extension on EdgeInsets
+- ❌ **NEVER** create inline UI enhancements that could be reused
+- ❌ **NEVER** use `.h`, `.w`, or `.sp` directly for these values
+
+---
+
+# Localization Guidelines (CRITICAL)
+
+## ⚠️ MANDATORY: All User-Facing Strings Must Be Localized
+
+**This is a CRITICAL rule that MUST be followed for ALL strings displayed to users.**
+
+### Rule
+- **ALL user-facing strings MUST use localization** via `S.of(context)` or the generated `S` class
+- **NEVER use hardcoded strings** in UI components, error messages, or any text visible to users
+- **ALL strings must be added to** `lib/l10n/intl_en.arb` and `lib/l10n/intl_ar.arb`
+
+### What Must Be Localized
+- ✅ All text in UI components (buttons, labels, titles, descriptions)
+- ✅ Error messages and validation messages
+- ✅ SnackBar messages and toast notifications
+- ✅ Dialog titles and content
+- ✅ AppBar titles
+- ✅ Form field labels and hints
+- ✅ Placeholder text
+- ✅ Status messages
+- ✅ Any text visible to end users
+
+### What Does NOT Need Localization
+- ❌ Technical identifiers (IDs, keys, paths)
+- ❌ Debug/log messages (use CustomLogger)
+- ❌ Code comments
+- ❌ Variable names
+- ❌ API endpoints or configuration values
+
+### Implementation Guidelines
+
+1. **Using Localization:**
+   ```dart
+   // ❌ WRONG - Hardcoded string
+   Text('Sign In')
+   SnackBar(content: Text('Login failed'))
+   AppBar(title: Text('Profile'))
+   
+   // ✅ CORRECT - Localized string
+   Text(S.of(context).signIn)
+   SnackBar(content: Text(S.of(context).loginFailed))
+   AppBar(title: Text(S.of(context).profile))
+   ```
+
+2. **Adding New Strings:**
+   - Add the English string to `lib/l10n/intl_en.arb`
+   - Add the Arabic translation to `lib/l10n/intl_ar.arb`
+   - Run `flutter gen-l10n` or let the build system generate the localization files
+   - Use the generated key via `S.of(context).yourKey`
+
+3. **String Format Example:**
+   ```json
+   // lib/l10n/intl_en.arb
+   {
+     "signIn": "Sign In",
+     "loginFailed": "Login failed. Please try again.",
+     "welcomeMessage": "Welcome, {name}!",
+     "@welcomeMessage": {
+       "placeholders": {
+         "name": {
+           "type": "String"
+         }
+       }
+     }
+   }
+   
+   // lib/l10n/intl_ar.arb
+   {
+     "signIn": "تسجيل الدخول",
+     "loginFailed": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+     "welcomeMessage": "مرحباً، {name}!"
+   }
+   ```
+
+4. **Using Localized Strings with Parameters:**
+   ```dart
+   // ✅ CORRECT
+   Text(S.of(context).welcomeMessage('John'))
+   Text(S.of(context).weveSentACodeTo('user@example.com'))
+   ```
+
+5. **Error Messages:**
+   ```dart
+   // ❌ WRONG
+   throw Exception('User not found')
+   ScaffoldMessenger.of(context).showSnackBar(
+     SnackBar(content: Text('An error occurred')),
+   )
+   
+   // ✅ CORRECT
+   throw Exception(S.of(context).userNotFound)
+   ScaffoldMessenger.of(context).showSnackBar(
+     SnackBar(content: Text(S.of(context).errorOccurred)),
+   )
+   ```
+
+### Rule Summary
+- ✅ **ALWAYS** use `S.of(context)` for all user-facing strings
+- ✅ **ALWAYS** add strings to both `intl_en.arb` and `intl_ar.arb`
+- ✅ **ALWAYS** use localization for error messages, validation messages, and UI text
+- ❌ **NEVER** use hardcoded strings in UI components
+- ❌ **NEVER** skip localization for user-visible text
+- ❌ **NEVER** use English-only strings in production code
+
